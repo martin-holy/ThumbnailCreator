@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using System.Text;
@@ -39,9 +40,17 @@ namespace ThumbnailCreator {
       Dispose();
     }
 
-    public void CreateThumbnail(string srcPath, string destPath, int size, long quality) {
+    public void CreateThumbnail(string srcPath, string destPath, int size, long quality, int rotationAngle) {
       GenerateIExtractImage(srcPath);
       Extract(size, size, DEFAULTFLAGS);
+
+      // rotate
+      switch (rotationAngle) {
+        case 90: Thumbnail.RotateFlip(RotateFlipType.Rotate90FlipNone); break;
+        case 180: Thumbnail.RotateFlip(RotateFlipType.Rotate180FlipNone); break;
+        case 270: Thumbnail.RotateFlip(RotateFlipType.Rotate270FlipNone); break;
+      }
+
       SaveAsJpeg(destPath, quality);
     }
 

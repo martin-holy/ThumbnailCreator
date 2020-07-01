@@ -5,7 +5,7 @@ using System.IO;
 namespace ThumbnailCreator {
   class Program {
     static void Main(string[] args) {
-      //src|"d:\!test\20150831_114319_Martin.jpg" dest|"d:\!test\20150831_114319_Martin_thumb.jpg" quality|80 size|400
+      //src|"d:\!test\20150831_114319_Martin.jpg" dest|"d:\!test\20150831_114319_Martin_thumb.jpg" quality|80 size|400 rotationAngle|0
       try {
         var arguments = new Dictionary<string, string>();
 
@@ -21,6 +21,7 @@ namespace ThumbnailCreator {
         string srcPath = arguments["src"];
         string destPath = arguments["dest"];
         long quality = long.Parse(arguments["quality"]);
+        int rotationAngle = int.Parse(arguments["rotationAngle"]);
 
         if (!File.Exists(srcPath)) return;
 
@@ -31,7 +32,7 @@ namespace ThumbnailCreator {
 
         try {
           var thumb = new ShellThumbnail();
-          thumb.CreateThumbnail(srcPath, destPath, size, quality);
+          thumb.CreateThumbnail(srcPath, destPath, size, quality, rotationAngle);
           thumb.Dispose();
         } catch (Exception) {
           //file can have 0 size
